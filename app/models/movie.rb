@@ -7,6 +7,8 @@ class Movie < ActiveRecord::Base
   validates :release_date, presence: true
   validate :release_date_is_in_the_future
 
+  has_many :reviews
+
   protected
   def release_date_is_in_the_future
     if release_date.present?
