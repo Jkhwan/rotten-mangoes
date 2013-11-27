@@ -20,12 +20,10 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'valid_email'
 
-group :development do
-  gem 'better_errors'
-end
-
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'pry'
+  gem 'pry-debugger'
 end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes

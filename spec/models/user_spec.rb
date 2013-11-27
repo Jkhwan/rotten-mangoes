@@ -39,13 +39,24 @@ describe User do
       expect(u.errors.count).to eq(1)
       expect(u.errors[:lastname].first).to eq("can't be blank")
     end
-    it "should fail if email is not provided" do
-      u = User.new(firstname: "K", 
-                   lastname: "V", 
-                   password: "lighthouse", 
-                   password_confirmation: "lighthouse")
-      expect(u.save).to eq(false)
-      expect(u.errors[:email].first).to eq("can't be blank")
+    describe "email" do
+      it "should fail if email is not provided" do
+        u = User.new(firstname: "K", 
+                     lastname: "V", 
+                     password: "lighthouse", 
+                     password_confirmation: "lighthouse")
+        expect(u.save).to eq(false)
+        expect(u.errors[:email].first).to eq("can't be blank")
+      end
+      it "should fail if email provided is not a valid email" do
+        u = User.new(firstname: "K", 
+                     lastname: "V", 
+                     email: "kv",
+                     password: "123456",
+                     password_confirmation: "123456")
+        expect(u.save).to eq(false)
+        expect(u.errors[:email].first).to eq("is invalid")
+      end
     end
     describe "password" do
       it "should fail if password is not provided" do
@@ -99,15 +110,6 @@ describe User do
                      password_confirmation: "123456")
         expect(u.save).to eq(true)
       end     
-      it "should fail if email provided is not a valid email" do
-        u = User.new(firstname: "K", 
-                     lastname: "V", 
-                     email: "kv",
-                     password: "123456",
-                     password_confirmation: "123456")
-        expect(u.save).to eq(false)
-        expect(u.errors[:email].first).to eq("is invalid")
-      end
     end
   end
 end
